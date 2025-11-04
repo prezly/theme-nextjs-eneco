@@ -239,49 +239,91 @@ export function Header({
                                 <div role="none" className={styles.backdrop} onClick={closeMenu} />
                                 {/** biome-ignore lint/correctness/useUniqueElementIds: <Header is rendered only once. It's safe to have static id> */}
                                 <ul id="menu" className={styles.navigationInner}>
-                                    {numberOfPublicGalleries > 0 && (
-                                        <li className={styles.navigationItem}>
-                                            <ButtonLink
-                                                href={{
-                                                    routeName: 'media',
-                                                    params: { localeCode },
-                                                }}
-                                                variation="navigation"
-                                                className={styles.navigationButton}
-                                            >
-                                                <FormattedMessage
-                                                    locale={localeCode}
-                                                    for={
-                                                        numberOfPublicGalleries === 1
-                                                            ? translations.mediaGallery
-                                                                  .titleSingular
-                                                            : translations.mediaGallery.title
-                                                    }
-                                                />
-                                            </ButtonLink>
-                                        </li>
-                                    )}
-                                    {isCategoriesLayoutDropdown && (
-                                        <Categories
-                                            categories={categories}
-                                            localeCode={localeCode}
-                                            marginTop={measurement?.height}
-                                            translatedCategories={translatedCategories}
-                                        />
-                                    )}
-                                    {mainSiteUrl && (
-                                        <li className={styles.navigationItem}>
-                                            <ButtonLink
-                                                href={mainSiteUrl.href}
-                                                variation="navigation"
-                                                icon={IconExternalLink}
-                                                iconPlacement="right"
-                                                className={styles.navigationButton}
-                                            >
-                                                {getMainSiteLabel() || humanizeUrl(mainSiteUrl)}
-                                            </ButtonLink>
-                                        </li>
-                                    )}
+                                    {/* Item 2: Electricity & gas */}
+                                    <li className={styles.navigationItem}>
+                                        <ButtonLink
+                                            href="https://eneco.be/nl/stroom-gas"
+                                            variation="navigation"
+                                            className={styles.navigationButton}
+                                        >
+                                            Electricity & gas
+                                        </ButtonLink>
+                                    </li>
+                                    {/* Item 3: Save Energy */}
+                                    <li className={styles.navigationItem}>
+                                        <ButtonLink
+                                            href="https://eneco.be/nl/energie-besparen"
+                                            variation="navigation"
+                                            className={styles.navigationButton}
+                                        >
+                                            Save Energy
+                                        </ButtonLink>
+                                    </li>
+                                    {/* Item 4: Participate */}
+                                    <li className={styles.navigationItem}>
+                                        <ButtonLink
+                                            href="https://eneco.be/nl/participeren"
+                                            variation="navigation"
+                                            className={styles.navigationButton}
+                                        >
+                                            Participate
+                                        </ButtonLink>
+                                    </li>
+                                    {/* Item 5: Customer benefits */}
+                                    <li className={styles.navigationItem}>
+                                        <ButtonLink
+                                            href="https://eneco.be/nl/klantvoordelen"
+                                            variation="navigation"
+                                            className={styles.navigationButton}
+                                        >
+                                            Customer benefits
+                                        </ButtonLink>
+                                    </li>
+                                    {/* Item 6: Help & Contact */}
+                                    <li className={styles.navigationItem}>
+                                        <ButtonLink
+                                            href="https://eneco.be/nl/contact"
+                                            variation="navigation"
+                                            className={styles.navigationButton}
+                                        >
+                                            Help & Contact
+                                        </ButtonLink>
+                                    </li>
+                                    {/* Item 7: Empty spacer */}
+                                    <li className={styles.navigationItem}>
+                                        <span className={styles.navigationSpacer} />
+                                    </li>
+                                    {/* Item 8: Freelancers */}
+                                    <li className={styles.navigationItem}>
+                                        <ButtonLink
+                                            href="https://eneco.be/nl/kmo"
+                                            variation="navigation"
+                                            className={styles.navigationButton}
+                                        >
+                                            Freelancers
+                                        </ButtonLink>
+                                    </li>
+                                    {/* Item 9: Business */}
+                                    <li className={styles.navigationItem}>
+                                        <ButtonLink
+                                            href="https://eneco.be/nl/business"
+                                            variation="navigation"
+                                            className={styles.navigationButton}
+                                        >
+                                            Business
+                                        </ButtonLink>
+                                    </li>
+                                    {/* Item 10: My Eneco */}
+                                    <li className={styles.navigationItem}>
+                                        <ButtonLink
+                                            href="https://my.eneco.be/nl/Account/Logon?returnUrl=%2Fnl"
+                                            variation="navigation"
+                                            className={styles.navigationButton}
+                                        >
+                                            My Eneco
+                                        </ButtonLink>
+                                    </li>
+                                    {/* Item 11: Language selector */}
                                     {children}
                                 </ul>
                             </div>
