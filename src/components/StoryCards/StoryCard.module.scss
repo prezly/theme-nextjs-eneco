@@ -99,6 +99,10 @@
     gap: $spacing-7;
     padding: 0 0 $spacing-8;
 
+    .imageWrapper {
+        aspect-ratio: 16 / 9;
+    }
+
     .content {
         display: flex;
         flex-direction: column;
@@ -124,11 +128,18 @@
 
     .title {
         @include heading-1;
+        font-size: 27px;
     }
 
     .subtitle {
         font-size: $font-size-m;
         line-height: 160%;
+    }
+
+    .readMore {
+        margin-top: $spacing-3;
+        text-decoration: none;
+        color: var(--prezly-text-color);
     }
 
     @include mobile-only {

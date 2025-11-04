@@ -111,10 +111,17 @@ export function StoryCard({
                         </Link>
                     </p>
                 )}
-                {showDate && publishedAt && (
-                    <div className={styles.date}>
-                        <FormattedDate value={publishedAt} />
-                    </div>
+                {size === 'hero' && (
+                    <Link
+                        href={href}
+                        className={styles.readMore}
+                        title={titleAsString}
+                        aria-hidden="true"
+                        role="presentation"
+                        tabIndex={-1}
+                    >
+                        Lees meer over dit bericht
+                    </Link>
                 )}
             </div>
         </div>
