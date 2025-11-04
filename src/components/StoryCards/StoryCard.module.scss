@@ -94,6 +94,14 @@
     color: var(--prezly-text-color-secondary);
 }
 
+.readMoreRelease {
+    margin-top: $spacing-2;
+    margin-bottom: $spacing-2;
+    text-decoration: none;
+    color: var(--prezly-text-color);
+    font-size: $font-size-m;
+}
+
 .hero {
     display: flex;
     gap: $spacing-7;

@@ -171,10 +171,7 @@ export function StoriesList({
                                 thumbnailImage={story.thumbnail_image}
                                 title={story.title}
                                 titleAsString={story.title}
-                                translatedCategories={Category.translations(
-                                    story.categories,
-                                    locale,
-                                )}
+                                translatedCategories={[]}
                                 variant={storyCardVariant}
                             />
                         );

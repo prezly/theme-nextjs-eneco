@@ -104,6 +104,13 @@ export function StoryCard({
                         {title}
                     </Link>
                 </HeadingTag>
+                <Link
+                    href={href}
+                    className={styles.readMoreRelease}
+                    title={titleAsString}
+                >
+                    Read more from this release
+                </Link>
                 {showSubtitle && subtitle && (
                     <p className={styles.subtitle}>
                         <Link href={href} className={styles.subtitleLink}>
