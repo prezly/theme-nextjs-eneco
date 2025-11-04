@@ -99,15 +99,22 @@
     gap: $spacing-7;
     padding: 0 0 $spacing-8;
 
-    .imageWrapper,
-    .content {
-        flex: 1;
-    }
-
     .content {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+    }
+
+    @include desktop-up {
+        .imageWrapper {
+            flex: 0 0 65%;
+        }
+
+        .content {
+            flex: 0 0 35%;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+        }
     }
 
     .meta {
