@@ -1,34 +1,33 @@
-import type { TranslatedCategory } from '@prezly/sdk';
-import classNames from 'classnames';
-import type { ReactNode } from 'react';
+import type { TranslatedCategory } from "@prezly/sdk";
+import classNames from "classnames";
+import type { ReactNode } from "react";
 
-import { FormattedDate } from '@/adapters/client';
-import { Link } from '@/components/Link';
-import type { ExternalStoryUrl, ListStory } from '@/types';
+import { Link } from "@/components/Link";
+import type { ExternalStoryUrl, ListStory } from "@/types";
 
-import { CategoriesList } from '../CategoriesList';
-import { StoryImage } from '../StoryImage';
+import { CategoriesList } from "../CategoriesList";
+import { StoryImage } from "../StoryImage";
 
-import styles from './StoryCard.module.scss';
+import styles from "./StoryCard.module.scss";
 
 type Props = {
     className?: string;
     external: ExternalStoryUrl;
-    fallback: StoryImage.Props['fallback'];
+    fallback: StoryImage.Props["fallback"];
     forceAspectRatio?: boolean;
-    layout: 'horizontal' | 'vertical';
-    placeholder: StoryImage.Props['placeholder'];
+    layout: "horizontal" | "vertical";
+    placeholder: StoryImage.Props["placeholder"];
     publishedAt: string | null;
     showDate: boolean;
     showSubtitle: boolean;
-    size?: 'small' | 'medium' | 'big' | 'hero';
+    size?: "small" | "medium" | "big" | "hero";
     slug: string;
     subtitle: ReactNode;
-    thumbnailImage: ListStory['thumbnail_image'];
+    thumbnailImage: ListStory["thumbnail_image"];
     title: ReactNode;
     titleAsString: string;
     translatedCategories: TranslatedCategory[];
-    variant?: 'default' | 'boxed';
+    variant?: "default" | "boxed";
     withStaticImage?: boolean;
 };
 
@@ -39,34 +38,32 @@ export function StoryCard({
     forceAspectRatio,
     layout,
     placeholder,
-    publishedAt,
-    showDate,
     showSubtitle,
-    size = 'small',
+    size = "small",
     slug,
     subtitle,
     thumbnailImage,
     title,
     titleAsString,
     translatedCategories,
-    variant = 'default',
+    variant = "default",
     withStaticImage = false,
 }: Props) {
     const hasCategories = translatedCategories.length > 0;
-    const HeadingTag = size === 'small' ? 'h3' : 'h2';
+    const HeadingTag = size === "small" ? "h3" : "h2";
 
     const href = external
         ? external.storyUrl
-        : ({ routeName: 'story', params: { slug } } satisfies Link.Props['href']);
+        : ({ routeName: "story", params: { slug } } satisfies Link.Props["href"]);
 
     return (
         <div
             className={classNames(styles.container, className, {
-                [styles.boxed]: variant === 'boxed',
-                [styles.hero]: size === 'hero',
-                [styles.small]: size === 'small',
-                [styles.horizontal]: layout === 'horizontal',
-                [styles.vertical]: layout === 'vertical',
+                [styles.boxed]: variant === "boxed",
+                [styles.hero]: size === "hero",
+                [styles.small]: size === "small",
+                [styles.horizontal]: layout === "horizontal",
+                [styles.vertical]: layout === "vertical",
                 [styles.withStaticImage]: withStaticImage,
             })}
         >
@@ -91,7 +88,7 @@ export function StoryCard({
                             external={external}
                             isStatic
                             showAllCategories
-                            withBadges={variant === 'boxed'}
+                            withBadges={variant === "boxed"}
                         />
                     )}
                 </div>
@@ -104,11 +101,7 @@ export function StoryCard({
                         {title}
                     </Link>
                 </HeadingTag>
-                <Link
-                    href={href}
-                    className={styles.readMoreRelease}
-                    title={titleAsString}
-                >
+                <Link href={href} className={styles.readMoreRelease} title={titleAsString}>
                     Read more from this release
                 </Link>
                 {showSubtitle && subtitle && (
@@ -118,7 +111,7 @@ export function StoryCard({
                         </Link>
                     </p>
                 )}
-                {size === 'hero' && (
+                {size === "hero" && (
                     <Link
                         href={href}
                         className={styles.readMore}
