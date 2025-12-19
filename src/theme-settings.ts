@@ -1,6 +1,7 @@
 export enum Font {
     ALEGREYA = 'alegreya',
     ALEGREYA_SANS = 'alegreya_sans',
+    ETELKA_MEDIUM = 'etelka_medium',
     INTER = 'inter',
     MERRIWEATHER = 'merriweather',
     MULISH = 'mulish',
@@ -67,7 +68,7 @@ export const DEFAULT_THEME_SETTINGS: ThemeSettings = {
     accent_color: '#3b82f6',
     background_color: '#ffffff',
     categories_layout: 'dropdown',
-    font: Font.INTER,
+    font: Font.ETELKA_MEDIUM,
     footer_background_color: '#111827',
     footer_text_color: '#ffffff',
     full_width_featured_story: false,
@@ -103,6 +104,7 @@ export const DEFAULT_THEME_SETTINGS: ThemeSettings = {
 export const FONT_FAMILY = {
     [Font.ALEGREYA]: "'Alegreya', serif",
     [Font.ALEGREYA_SANS]: "'Alegreya Sans', sans-serif",
+    [Font.ETELKA_MEDIUM]: "'Etelka Medium', sans-serif",
     [Font.INTER]: 'Inter, sans-serif',
     [Font.MERRIWEATHER]: 'Merriweather, serif',
     [Font.MULISH]: 'Mulish, sans-serif',
@@ -124,12 +126,14 @@ export function getRelatedFont(font: Font): Font | null {
     }
 }
 
-export function getGoogleFontName(font: Font): string {
+export function getGoogleFontName(font: Font): string | null {
     switch (font) {
         case Font.ALEGREYA:
             return 'Alegreya';
         case Font.ALEGREYA_SANS:
             return 'Alegreya Sans';
+        case Font.ETELKA_MEDIUM:
+            return null; // Local font, not from Google
         case Font.MERRIWEATHER:
             return 'Merriweather';
         case Font.MULISH:

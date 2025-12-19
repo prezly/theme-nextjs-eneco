@@ -13,8 +13,8 @@ import { useMeasure } from '@react-hookz/web';
 import classNames from 'classnames';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
-import type { MouseEvent, ReactNode } from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import type { MouseEvent, ReactElement, ReactNode } from 'react';
+import { cloneElement, useEffect, useMemo, useState } from 'react';
 
 import { FormattedMessage, useIntl } from '@/adapters/client';
 import { Button, ButtonLink } from '@/components/Button';
@@ -184,162 +184,171 @@ export function Header({
             <header ref={headerRef} className={styles.container}>
                 <div className="container">
                     <nav className={styles.header}>
-                        <Link
-                            href={{ routeName: 'index', params: { localeCode } }}
-                            className={classNames(styles.newsroom, {
-                                [styles.withoutLogo]: !logo,
-                            })}
-                        >
-                            {!logo && <div className={styles.title}>{newsroomName}</div>}
-                            {logo && <Logo alt={newsroomName} image={logo} size={logoSize} />}
-                        </Link>
-
-                        <div className={styles.navigationWrapper}>
-                            {searchSettings && !newsroom.is_hub && (
-                                <ButtonLink
-                                    href={{
-                                        routeName: 'search',
-                                        params: { localeCode },
-                                    }}
-                                    variation="navigation"
-                                    className={classNames(styles.searchToggle, {
-                                        [styles.hidden]: isMenuOpen,
-                                        [styles.close]: isSearchOpen,
-                                    })}
-                                    icon={isSearchOpen && isMobile ? IconClose : IconSearch}
-                                    onClick={toggleSearchWidget}
-                                    aria-expanded={isSearchOpen}
-                                    title={formatMessage(translations.search.title)}
-                                    aria-label={formatMessage(translations.search.title)}
-                                />
-                            )}
-
-                            {shouldShowMenu && (
-                                <Button
-                                    variation="navigation"
-                                    icon={isMenuOpen ? IconClose : IconMenu}
-                                    className={classNames(styles.navigationToggle, {
-                                        [styles.hidden]: isSearchOpen,
-                                    })}
-                                    onClick={toggleMenu}
-                                    aria-expanded={isMenuOpen}
-                                    aria-controls="menu"
-                                    title={formatMessage(translations.misc.toggleMobileNavigation)}
-                                    aria-label={formatMessage(
-                                        translations.misc.toggleMobileNavigation,
-                                    )}
-                                />
-                            )}
-
-                            <div
-                                className={classNames(styles.navigation, {
-                                    [styles.open]: isMenuOpen,
+                        <div className={styles.navigationLeft}>
+                            <Link
+                                href={{ routeName: 'index', params: { localeCode } }}
+                                className={classNames(styles.newsroom, {
+                                    [styles.withoutLogo]: !logo,
                                 })}
                             >
-                                <div role="none" className={styles.backdrop} onClick={closeMenu} />
-                                {/** biome-ignore lint/correctness/useUniqueElementIds: <Header is rendered only once. It's safe to have static id> */}
-                                <ul id="menu" className={styles.navigationInner}>
-                                    {/* Item 2: Electricity & gas */}
-                                    <li className={styles.navigationItem}>
-                                        <ButtonLink
-                                            href="https://eneco.be/nl/stroom-gas"
-                                            variation="navigation"
-                                            className={styles.navigationButton}
-                                        >
-                                            Electricity & gas
-                                        </ButtonLink>
-                                    </li>
-                                    {/* Item 3: Save Energy */}
-                                    <li className={styles.navigationItem}>
-                                        <ButtonLink
-                                            href="https://eneco.be/nl/energie-besparen"
-                                            variation="navigation"
-                                            className={styles.navigationButton}
-                                        >
-                                            Save Energy
-                                        </ButtonLink>
-                                    </li>
-                                    {/* Item 4: Participate */}
-                                    <li className={styles.navigationItem}>
-                                        <ButtonLink
-                                            href="https://eneco.be/nl/participeren"
-                                            variation="navigation"
-                                            className={styles.navigationButton}
-                                        >
-                                            Participate
-                                        </ButtonLink>
-                                    </li>
-                                    {/* Item 5: Customer benefits */}
-                                    <li className={styles.navigationItem}>
-                                        <ButtonLink
-                                            href="https://eneco.be/nl/klantvoordelen"
-                                            variation="navigation"
-                                            className={styles.navigationButton}
-                                        >
-                                            Customer benefits
-                                        </ButtonLink>
-                                    </li>
-                                    {/* Item 6: Help & Contact */}
-                                    <li className={styles.navigationItem}>
-                                        <ButtonLink
-                                            href="https://eneco.be/nl/contact"
-                                            variation="navigation"
-                                            className={styles.navigationButton}
-                                        >
-                                            Help & Contact
-                                        </ButtonLink>
-                                    </li>
-                                    {/* Item 7: Empty spacer */}
-                                    <li className={styles.navigationItem}>
-                                        <span className={styles.navigationSpacer} />
-                                    </li>
-                                    {/* Item 8: Freelancers */}
-                                    <li className={styles.navigationItem}>
-                                        <ButtonLink
-                                            href="https://eneco.be/nl/kmo"
-                                            variation="navigation"
-                                            className={styles.navigationButton}
-                                        >
-                                            Freelancers
-                                        </ButtonLink>
-                                    </li>
-                                    {/* Item 9: Business */}
-                                    <li className={styles.navigationItem}>
-                                        <ButtonLink
-                                            href="https://eneco.be/nl/business"
-                                            variation="navigation"
-                                            className={styles.navigationButton}
-                                        >
-                                            Business
-                                        </ButtonLink>
-                                    </li>
-                                    {/* Item 10: My Eneco */}
-                                    <li className={styles.navigationItem}>
-                                        <ButtonLink
-                                            href="https://my.eneco.be/nl/Account/Logon?returnUrl=%2Fnl"
-                                            variation="navigation"
-                                            className={styles.navigationButton}
-                                        >
-                                            My Eneco
-                                        </ButtonLink>
-                                    </li>
-                                    {/* Item 11: Language selector */}
-                                    {children}
-                                </ul>
+                                {!logo && <div className={styles.title}>{newsroomName}</div>}
+                                {logo && <Logo alt={newsroomName} image={logo} size={logoSize} />}
+                            </Link>
+
+                            <div className={styles.navigationWrapper}>
+                                {shouldShowMenu && (
+                                    <Button
+                                        variation="navigation"
+                                        icon={isMenuOpen ? IconClose : IconMenu}
+                                        className={classNames(styles.navigationToggle, {
+                                            [styles.hidden]: isSearchOpen,
+                                        })}
+                                        onClick={toggleMenu}
+                                        aria-expanded={isMenuOpen}
+                                        aria-controls="menu"
+                                        title={formatMessage(translations.misc.toggleMobileNavigation)}
+                                        aria-label={formatMessage(
+                                            translations.misc.toggleMobileNavigation,
+                                        )}
+                                    />
+                                )}
+
+                                <div
+                                    className={classNames(styles.navigation, {
+                                        [styles.open]: isMenuOpen,
+                                    })}
+                                >
+                                    <div role="none" className={styles.backdrop} onClick={closeMenu} />
+                                    {/** biome-ignore lint/correctness/useUniqueElementIds: <Header is rendered only once. It's safe to have static id> */}
+                                    <ul id="menu" className={styles.navigationInner}>
+                                        {/* Item 2: Electricity & gas */}
+                                        <li className={styles.navigationItem}>
+                                            <ButtonLink
+                                                href="https://eneco.be/nl/stroom-gas"
+                                                variation="navigation"
+                                                className={styles.navigationButton}
+                                            >
+                                                Electricity & gas
+                                            </ButtonLink>
+                                        </li>
+                                        {/* Item 3: Save Energy */}
+                                        <li className={styles.navigationItem}>
+                                            <ButtonLink
+                                                href="https://eneco.be/nl/energie-besparen"
+                                                variation="navigation"
+                                                className={styles.navigationButton}
+                                            >
+                                                Save Energy
+                                            </ButtonLink>
+                                        </li>
+                                        {/* Item 4: Participate */}
+                                        <li className={styles.navigationItem}>
+                                            <ButtonLink
+                                                href="https://eneco.be/nl/participeren"
+                                                variation="navigation"
+                                                className={styles.navigationButton}
+                                            >
+                                                Participate
+                                            </ButtonLink>
+                                        </li>
+                                        {/* Item 5: Customer benefits */}
+                                        <li className={styles.navigationItem}>
+                                            <ButtonLink
+                                                href="https://eneco.be/nl/klantvoordelen"
+                                                variation="navigation"
+                                                className={styles.navigationButton}
+                                            >
+                                                Customer benefits
+                                            </ButtonLink>
+                                        </li>
+                                        {/* Item 6: Help & Contact */}
+                                        <li className={styles.navigationItem}>
+                                            <ButtonLink
+                                                href="https://eneco.be/nl/contact"
+                                                variation="navigation"
+                                                className={styles.navigationButton}
+                                            >
+                                                Help & Contact
+                                            </ButtonLink>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {searchSettings && (
+                                    <SearchWidget
+                                        settings={searchSettings}
+                                        localeCode={localeCode}
+                                        categories={translatedCategories}
+                                        dialogClassName={styles.mobileSearchWrapper}
+                                        isOpen={isSearchOpen}
+                                        isSearchPage={isSearchPage}
+                                        onClose={closeSearchWidget}
+                                        newsrooms={newsrooms}
+                                        newsroomUuid={newsroom.uuid}
+                                    />
+                                )}
                             </div>
-                            {searchSettings && (
-                                <SearchWidget
-                                    settings={searchSettings}
-                                    localeCode={localeCode}
-                                    categories={translatedCategories}
-                                    dialogClassName={styles.mobileSearchWrapper}
-                                    isOpen={isSearchOpen}
-                                    isSearchPage={isSearchPage}
-                                    onClose={closeSearchWidget}
-                                    newsrooms={newsrooms}
-                                    newsroomUuid={newsroom.uuid}
-                                />
-                            )}
+                        </div>
+
+                        <div className={styles.navigationRight}>
+                            <ul className={styles.navigationInner}>
+                                {/* Item 8: Freelancers */}
+                                <li className={styles.navigationItem}>
+                                    <ButtonLink
+                                        href="https://eneco.be/nl/kmo"
+                                        variation="navigation"
+                                        className={styles.navigationButton}
+                                    >
+                                        Freelancers
+                                    </ButtonLink>
+                                </li>
+                                {/* Item 9: Business */}
+                                <li className={styles.navigationItem}>
+                                    <ButtonLink
+                                        href="https://eneco.be/nl/business"
+                                        variation="navigation"
+                                        className={styles.navigationButton}
+                                    >
+                                        Business
+                                    </ButtonLink>
+                                </li>
+                                {/* Item 10: My Eneco */}
+                                <li className={classNames(styles.navigationItem, styles.myEnecoItem)}>
+                                    <ButtonLink
+                                        href="https://my.eneco.be/nl/Account/Logon?returnUrl=%2Fnl"
+                                        variation="navigation"
+                                        className={styles.navigationButton}
+                                    >
+                                        My Eneco
+                                    </ButtonLink>
+                                </li>
+                                {/* Item 11: Search */}
+                                {searchSettings && !newsroom.is_hub && (
+                                    <li className={styles.navigationItem}>
+                                        <ButtonLink
+                                            href={{
+                                                routeName: 'search',
+                                                params: { localeCode },
+                                            }}
+                                            variation="navigation"
+                                            className={classNames(styles.navigationButton, styles.searchButton)}
+                                            icon={IconSearch}
+                                            onClick={toggleSearchWidget}
+                                            aria-expanded={isSearchOpen}
+                                            title={formatMessage(translations.search.title)}
+                                            aria-label={formatMessage(translations.search.title)}
+                                        />
+                                    </li>
+                                )}
+                            </ul>
+                            {children && typeof children === 'object' && 'props' in children
+                                ? (
+                                    <li className={styles.navigationItem}>
+                                        {cloneElement(children as ReactElement, { asListItem: false })}
+                                    </li>
+                                )
+                                : children ? (
+                                    <li className={styles.navigationItem}>{children}</li>
+                                ) : null}
                         </div>
                     </nav>
                 </div>

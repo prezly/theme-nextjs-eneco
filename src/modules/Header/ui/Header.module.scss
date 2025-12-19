@@ -1,10 +1,17 @@
-$header-height: 88px;
+$header-height: 100px;
 
 .container {
     display: flex;
     background: var(--prezly-header-background-color);
     min-height: $header-height;
     z-index: 3;
+
+    :global(.container) {
+        @include desktop-up {
+            padding-left: 17px;
+            padding-right: 9px;
+        }
+    }
 }
 
 .header {
@@ -13,6 +20,8 @@ $header-height: 88px;
     justify-content: space-between;
     padding: $spacing-3 0;
     height: 100%;
+    width: 100%;
+    gap: 0;
 
     .navigationToggle {
         color: var(--prezly-header-link-color);
@@ -28,6 +37,20 @@ $header-height: 88px;
 
     .navigationButton {
         color: var(--prezly-header-link-color);
+        transition-behavior: normal;
+        transition-delay: 0s;
+        transition-duration: 0.2s;
+        transition-property: color;
+        transition-timing-function: ease;
+
+        span {
+            color: rgba(0, 0, 0, 1);
+            transition-behavior: normal;
+            transition-delay: 0s;
+            transition-duration: 0.2s;
+            transition-property: color;
+            transition-timing-function: ease;
+        }
 
         @include mobile-only {
             @include text-label;
@@ -38,6 +61,16 @@ $header-height: 88px;
             padding: $spacing-4 $grid-gutter-mobile;
             color: var(--prezly-header-link-color);
             border-top: 1px solid var(--prezly-border-color);
+        }
+
+        &:not(.searchButton) {
+            &:hover {
+                color: #d21242;
+
+                span {
+                    color: #d21242;
+                }
+            }
         }
 
         &:hover,
@@ -52,7 +85,7 @@ $header-height: 88px;
     }
 
     .searchToggle {
-        color: var(--prezly-header-link-color);
+        color: rgba(0, 0, 0, 1);
 
         @include mobile-only {
             font-size: $font-size-m;
@@ -88,10 +121,36 @@ $header-height: 88px;
     }
 }
 
+.navigationLeft {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 0 1 auto;
+    gap: 0;
+
+    @include tablet-up {
+        gap: 0;
+    }
+}
+
+.navigationRight {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0 1 auto;
+    gap: 0;
+
+    @include tablet-up {
+        gap: 0;
+    }
+}
+
 .newsroom {
     @include link-primary;
 
     display: flex;
+    padding-right: 0;
+    margin-right: 35px;
 
     &.withoutLogo {
         color: var(--prezly-header-link-color);
@@ -114,18 +173,38 @@ $header-height: 88px;
     }
 }
 
-.navigation,
+.navigation {
+    @include tablet-up {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+}
+
 .navigationInner {
     @include tablet-up {
         display: flex;
         align-items: center;
+        justify-content: flex-start;
+    }
+}
+
+.navigationRight .navigationInner {
+    @include tablet-up {
+        justify-content: flex-end;
     }
 }
 
 .navigationWrapper {
     display: flex;
     align-items: center;
-    margin-left: auto;
+    gap: $spacing-2;
+
+    > li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
 }
 
 /* Since search widget is in a portal, there is no better way of increasing the specificity other than adding global selectors */
@@ -151,6 +230,10 @@ div.mobileSearchWrapper {
     margin: 0;
     padding: 0;
 
+    @include tablet-up {
+        margin-left: -$spacing-4;
+    }
+
     @include mobile-only {
         position: relative;
         background: var(--prezly-header-background-color);
@@ -172,12 +255,47 @@ div.mobileSearchWrapper {
     display: block;
     margin: 0;
     padding: 0;
+
+    @include tablet-up {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+.searchButton {
+    color: rgba(0, 0, 0, 1);
+    border-width: 3px;
+    border-image: none;
+    font-weight: 800;
+
+    svg {
+        width: 20px;
+        height: 20px;
+        font-weight: 800;
+    }
+
+    @include tablet-up {
+        display: flex;
+        align-items: center;
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+}
+
+.myEnecoItem {
+    .navigationButton {
+        border: 2px solid #000;
+        border-radius: 6px;
+    }
 }
 
 .navigationSpacer {
     display: block;
     flex: 1;
-    min-width: 1rem;
+    min-width: 4rem;
 
     @include mobile-only {
         display: none;

@@ -5,7 +5,6 @@ import type { Locale } from '@prezly/theme-kit-nextjs';
 import classNames from 'classnames';
 
 import { Dropdown, DropdownItem } from '@/components/Dropdown';
-import { IconGlobe } from '@/icons';
 import { analytics } from '@/utils';
 
 import styles from './LanguagesDropdown.module.scss';
@@ -15,36 +14,40 @@ export function LanguagesDropdown({
     options,
     buttonClassName,
     navigationItemClassName,
+    asListItem = true,
 }: LanguagesDropdown.Props) {
     const selectedOption = options.find((option) => option.code === selected);
 
     const displayedOptions = [...options].sort((a, b) => a.title.localeCompare(b.title));
 
-    return (
-        <li className={navigationItemClassName}>
-            <Dropdown
-                icon={IconGlobe}
-                label={selectedOption?.title}
-                menuClassName={styles.menu}
-                buttonClassName={classNames(buttonClassName, styles.button)}
-                withMobileDisplay
-            >
-                {displayedOptions.map(({ code, href, title }) => (
-                    <DropdownItem
-                        key={code}
-                        href={href}
-                        withMobileDisplay
-                        className={classNames({
-                            [styles.disabled]: code === selected,
-                        })}
-                        onClick={() => analytics.track(ACTIONS.SWITCH_LANGUAGE, { code })}
-                    >
-                        {title}
-                    </DropdownItem>
-                ))}
-            </Dropdown>
-        </li>
+    const dropdown = (
+        <Dropdown
+            label={selectedOption?.title}
+            menuClassName={styles.menu}
+            buttonClassName={classNames(buttonClassName, styles.button)}
+            withMobileDisplay
+        >
+            {displayedOptions.map(({ code, href, title }) => (
+                <DropdownItem
+                    key={code}
+                    href={href}
+                    withMobileDisplay
+                    className={classNames({
+                        [styles.disabled]: code === selected,
+                    })}
+                    onClick={() => analytics.track(ACTIONS.SWITCH_LANGUAGE, { code })}
+                >
+                    {title}
+                </DropdownItem>
+            ))}
+        </Dropdown>
     );
+
+    if (asListItem) {
+        return <li className={navigationItemClassName}>{dropdown}</li>;
+    }
+
+    return dropdown;
 }
 
 export namespace LanguagesDropdown {
@@ -59,5 +62,6 @@ export namespace LanguagesDropdown {
         options: Option[];
         buttonClassName?: string;
         navigationItemClassName?: string;
+        asListItem?: boolean;
     }
 }

@@ -18,7 +18,7 @@ export default function Error() {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-family: Inter, sans-serif;
+                    font-family: var(--prezly-font-family-secondary, 'Etelka Medium', sans-serif);
                     text-align: center;
                 }
 

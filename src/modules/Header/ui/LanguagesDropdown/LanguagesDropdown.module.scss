@@ -10,6 +10,34 @@
     }
 }
 
+.button {
+    color: #eb4356 !important;
+    text-decoration: none;
+
+    span {
+        color: #eb4356 !important;
+    }
+
+    &:hover {
+        color: #eb4356 !important;
+        text-decoration: underline;
+
+        span {
+            color: #eb4356 !important;
+        }
+    }
+
+    &:active,
+    &:focus {
+        color: #eb4356 !important;
+        text-decoration: underline;
+
+        span {
+            color: #eb4356 !important;
+        }
+    }
+}
+
 .disabled {
     pointer-events: none;
     opacity: 0.5;

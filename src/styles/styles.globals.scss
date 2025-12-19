@@ -1,2 +1,15 @@
+@font-face {
+    font-family: 'Etelka Medium';
+    src: url('/fonts/etelkamedium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Force Etelka Medium on html/body to prevent overrides from modern-normalize or other resets
+html {
+    font-family: 'Etelka Medium', sans-serif !important;
+}
+
 @import "container";
 @import "typography";

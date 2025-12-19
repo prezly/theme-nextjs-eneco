@@ -3,7 +3,7 @@ import tinycolor from 'tinycolor2';
 import { Font, FONT_FAMILY, getRelatedFont, type ThemeSettings } from '@/theme-settings';
 
 function getFontFamily(font: Font): string {
-    return FONT_FAMILY[font] || FONT_FAMILY[Font.INTER];
+    return FONT_FAMILY[font] || FONT_FAMILY[Font.ETELKA_MEDIUM];
 }
 
 function getSecondaryFontFamily(font: Font): string {
