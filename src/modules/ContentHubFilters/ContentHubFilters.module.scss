@@ -1,0 +1,168 @@
+@import '@/styles/mixins/container';
+
+.layer {
+    @include full-width;
+    width: 100vw;
+    max-width: 100vw;
+    height: 58.4px;
+    background-color: rgba(45, 12, 57, 1);
+    border-bottom: 1px solid var(--prezly-border-color);
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 30px;
+        background-color: #3c235c;
+        z-index: 1;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 30px;
+        top: 0;
+        height: 100%;
+        width: 20px;
+        background-color: #3c235c;
+        clip-path: polygon(0 0, 20px 50%, 0 100%);
+        z-index: 1;
+    }
+}
+
+.retain {
+    @include container;
+    padding-left: 0px;
+    padding-right: 0px;
+    position: relative;
+    z-index: 2;
+}
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+}
+
+.item {
+    margin: 0;
+    padding: 0;
+    height: 58.4px;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 $spacing-2;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-weight: $font-weight-regular;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+
+    &:hover,
+    &:focus {
+        color: rgba(255, 255, 255, 1);
+        text-decoration: underline;
+    }
+}
+
+.desktop {
+    display: none;
+
+    @include tablet-up {
+        display: block;
+    }
+}
+
+.mobile {
+    position: relative;
+
+    @include tablet-up {
+        display: none;
+    }
+}
+
+.trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    background: none;
+    border: none;
+    color: var(--prezly-text-color);
+    font-size: $font-size-m;
+    font-weight: $font-weight-regular;
+    text-align: left;
+    cursor: pointer;
+    appearance: none;
+
+    &:hover,
+    &:focus {
+        color: var(--prezly-accent-color);
+    }
+}
+
+.wrapIcon {
+    display: flex;
+    align-items: center;
+    margin-left: $spacing-2;
+    transition: transform 0.2s ease;
+}
+
+.mobile.open .wrapIcon {
+    transform: rotate(90deg);
+}
+
+.icon {
+    width: 12px;
+    height: 12px;
+    color: currentColor;
+}
+
+.mobile .list {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--prezly-background-color);
+    border-top: 1px solid var(--prezly-border-color);
+    border-bottom: 1px solid var(--prezly-border-color);
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mobile.open .list {
+    display: flex;
+}
+
+.mobile .item {
+    width: 100%;
+}
+
+.mobile .link {
+    display: block;
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    border-bottom: 1px solid var(--prezly-border-color);
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: var(--prezly-background-color-secondary);
+    }
+}

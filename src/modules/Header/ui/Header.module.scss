@@ -275,6 +275,13 @@ div.mobileSearchWrapper {
         width: 20px;
         height: 20px;
         font-weight: 800;
+
+        path {
+            stroke: currentColor;
+            stroke-width: 0.5;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+        }
     }
 
     @include tablet-up {

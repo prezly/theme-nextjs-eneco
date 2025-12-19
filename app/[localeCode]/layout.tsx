@@ -19,6 +19,7 @@ import {
 } from '@/modules/Broadcast';
 import { CookieConsentProvider } from '@/modules/CookieConsent';
 import { CookieConsent } from '@/modules/CookieConsent/CookieConsent';
+import { ContentHubFilters } from '@/modules/ContentHubFilters';
 import { Footer } from '@/modules/Footer';
 import { Branding, Preconnect } from '@/modules/Head';
 import { Header } from '@/modules/Header';
@@ -105,6 +106,7 @@ export default async function MainLayout(props: Props) {
                     <Notifications localeCode={localeCode} />
                     <div className={styles.layout}>
                         <Header localeCode={localeCode} />
+                        <ContentHubFilters />
                         <main className={styles.content}>{children}</main>
                         <SubscribeForm />
                         <Boilerplate localeCode={localeCode} />
