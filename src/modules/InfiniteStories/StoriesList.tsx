@@ -160,7 +160,7 @@ export function StoriesList({
                                     text: newsroom?.name ?? '',
                                 }}
                                 forceAspectRatio
-                                layout="vertical"
+                                layout="horizontal"
                                 placeholder={getNewsroomPlaceholderColors(newsroom)}
                                 publishedAt={story.published_at}
                                 showDate={showDate}

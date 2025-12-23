@@ -1,5 +1,18 @@
 .container {
     position: relative;
+    width: 100%;
+
+    &.horizontal:not(.hero) {
+        height: 50vh;
+        min-height: 50vh;
+        max-height: 50vh;
+        margin-bottom: 4rem; // 4rem bottom margin for stories list items
+    }
+
+    &.hero.horizontal {
+        margin-left: -15px; // Negative margin for hero horizontal container
+        margin-right: -15px;
+    }
 
     @include desktop-up {
         &:hover .image {
@@ -12,6 +25,85 @@
 .horizontal {
     display: flex;
     gap: $spacing-4;
+    height: 100%;
+    align-items: stretch;
+
+    .imageWrapper {
+        height: 100%;
+        position: relative;
+        overflow: hidden; // Default: no shadow visible
+
+        // Ensure image fills container
+        img,
+        .image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: $spacing-4;
+        height: 100%;
+        overflow: hidden;
+    }
+}
+
+// Stories list specific styles (non-hero horizontal cards) - with shadow effect
+.horizontal:not(.hero) {
+    .imageWrapper {
+        flex: 0 0 25%; // Image takes 25% of available space in stories list
+        position: relative;
+        overflow: visible; // Allow shadow to be visible
+        aspect-ratio: 1 / 1; // Square aspect ratio (1:1)
+
+        // Shadow effect using :after pseudo-element - positioned behind and offset
+        &::after {
+            content: '';
+            position: absolute;
+            box-sizing: border-box;
+            display: block;
+            height: 100%;
+            width: 100%;
+            left: -48px;
+            top: -48px;
+            background-color: rgba(144, 238, 224, 0.6); // Light teal/mint green shadow
+            z-index: -1;
+        }
+
+        // Image container - offset to create the shadow effect
+        .imageContainer {
+            position: relative;
+            box-sizing: border-box;
+            display: block;
+            height: 100%;
+            width: 100%;
+            margin-left: 48px;
+            margin-right: -48px;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+
+    .content {
+        flex: 1 1 auto; // Content takes remaining space (75%)
+    }
+}
+
+// Hero horizontal card styles (main story card) - no shadow
+.hero.horizontal {
+    .imageWrapper {
+        flex: 0 0 71.5%; // Hero image size (from previous changes)
+        overflow: hidden; // No shadow for hero/main story card
+    }
+
+    .content {
+        flex: 0 0 28.5%; // Hero content size (from previous changes)
+    }
 }
 
 .meta {
@@ -44,6 +136,11 @@
     border: 1px solid var(--prezly-border-color);
     aspect-ratio: 4 / 3;
 
+    .horizontal & {
+        aspect-ratio: unset; // Remove aspect ratio for horizontal layout
+        overflow: visible; // Allow shadow to be visible
+    }
+
     .withStaticImage & {
         aspect-ratio: unset;
     }
@@ -58,6 +155,10 @@
 
 .content {
     padding: $spacing-4 0;
+
+    .horizontal & {
+        padding: $spacing-4; // Add padding on all sides for horizontal layout
+    }
 }
 
 .title {
@@ -142,11 +243,11 @@
 
     @include desktop-up {
         .imageWrapper {
-            flex: 0 0 65%;
+            flex: 0 0 71.5%; // Increased by 10% from 65% (65% * 1.1 = 71.5%)
         }
 
         .content {
-            flex: 0 0 35%;
+            flex: 0 0 28.5%; // Reduced to accommodate image increase (35% - 6.5% = 28.5%)
             justify-content: flex-start;
             align-items: flex-start; // Left align content
             text-align: left; // Left align text

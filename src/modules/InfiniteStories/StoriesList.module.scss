@@ -14,15 +14,18 @@
     display: grid;
     gap: $spacing-7;
     grid-template-columns: 1fr;
+    margin-top: calc($spacing-7 * 2); // Double the gap from highlighted story card
 
     @include tablet-up {
         gap: $spacing-7 $spacing-5;
         grid-template-columns: repeat(2, 1fr);
+        margin-top: calc($spacing-7 * 2); // Double the gap from highlighted story card
     }
 
     @include desktop-up {
         gap: $spacing-7;
         grid-template-columns: repeat(3, 1fr);
+        margin-top: calc($spacing-8 * 2); // Double the gap from highlighted story card (spacing-8 on desktop)
 
         &.stacked {
             grid-template-columns: 1fr;
