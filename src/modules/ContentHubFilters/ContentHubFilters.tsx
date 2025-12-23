@@ -1,8 +1,9 @@
 'use client';
 
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
+import { useLocale } from '@/adapters/client';
 import { Link } from '@/components/Link';
 import { useDevice } from '@/hooks';
 import { IconArrowRight } from '@/icons';
@@ -15,15 +16,44 @@ interface FilterItem {
     id?: string;
 }
 
-const filterItems: FilterItem[] = [
-    { href: '#heading-news', title: 'News' },
-    { href: '#heading-press-releases', title: 'Press Releases' },
-    { href: '#heading-media-library', title: 'Media Library', id: 'beeldbankAnchorlink' },
-    { href: '#heading-contacts', title: 'Contact us', id: 'title_contactslink' },
-];
-
 export function ContentHubFilters() {
+    const locale = useLocale();
     const { isMobile } = useDevice();
+
+    const filterItems: FilterItem[] = useMemo(
+        () => {
+            // Dutch is the default locale at root, so treat anything that's not 'fr' or 'en' as Dutch
+            const isFrench = locale === 'fr';
+            const isEnglish = locale === 'en';
+            const isDutch = !isFrench && !isEnglish;
+
+            if (isDutch) {
+                return [
+                    { href: '#heading-news', title: 'Nieuws' },
+                    { href: '#heading-press-releases', title: 'Persberichten' },
+                    { href: '#heading-media-library', title: 'Beeldbank', id: 'beeldbankAnchorlink' },
+                    { href: '#heading-contacts', title: 'Contacteer ons', id: 'title_contactslink' },
+                ];
+            }
+            if (isFrench) {
+                return [
+                    { href: '#heading-news', title: 'Actualités' },
+                    { href: '#heading-press-releases', title: 'Communiqués de presse' },
+                    { href: '#heading-media-library', title: 'Media Library', id: 'beeldbankAnchorlink' },
+                    { href: '#heading-contacts', title: 'Contactez-nous', id: 'title_contactslink' },
+                ];
+            }
+            // en (default)
+            return [
+                { href: '#heading-news', title: 'News' },
+                { href: '#heading-press-releases', title: 'Press Releases' },
+                { href: '#heading-media-library', title: 'Media Library', id: 'beeldbankAnchorlink' },
+                { href: '#heading-contacts', title: 'Contact us', id: 'title_contactslink' },
+            ];
+        },
+        [locale],
+    );
+
     const [isOpen, setIsOpen] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState(filterItems[0]?.title || 'News');
 

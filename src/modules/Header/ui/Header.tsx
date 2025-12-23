@@ -73,6 +73,11 @@ export function Header({
     const { isMobile } = useDevice();
     const searchParams = useSearchParams();
 
+    // Dutch is the default locale at root, so treat anything that's not 'fr' or 'en' as Dutch
+    const isFrench = localeCode === 'fr';
+    const isEnglish = localeCode === 'en';
+    const isDutch = !isFrench && !isEnglish;
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setSearchOpen] = useState(false);
     const [measurement, headerRef] = useMeasure<HTMLElement>();
@@ -224,51 +229,101 @@ export function Header({
                                         {/* Item 2: Electricity & gas */}
                                         <li className={styles.navigationItem}>
                                             <ButtonLink
-                                                href="https://eneco.be/nl/stroom-gas"
+                                                href={
+                                                    isDutch
+                                                        ? 'https://eneco.be/nl/stroom-gas'
+                                                        : isFrench
+                                                          ? 'https://eneco.be/fr/%C3%A9lectricit%C3%A9-gaz'
+                                                          : 'https://eneco.be/nl/stroom-gas'
+                                                }
                                                 variation="navigation"
                                                 className={styles.navigationButton}
                                             >
-                                                Electricity & gas
+                                                {isDutch
+                                                    ? 'Stroom & gas'
+                                                    : isFrench
+                                                      ? 'Électricité & gaz'
+                                                      : 'Electricity & gas'}
                                             </ButtonLink>
                                         </li>
                                         {/* Item 3: Save Energy */}
                                         <li className={styles.navigationItem}>
                                             <ButtonLink
-                                                href="https://eneco.be/nl/energie-besparen"
+                                                href={
+                                                    isDutch
+                                                        ? 'https://eneco.be/nl/energie-besparen'
+                                                        : isFrench
+                                                          ? 'https://eneco.be/fr/%C3%A9conomiser-de-l-%C3%A9nergie'
+                                                          : 'https://eneco.be/nl/energie-besparen'
+                                                }
                                                 variation="navigation"
                                                 className={styles.navigationButton}
                                             >
-                                                Save Energy
+                                                {isDutch
+                                                    ? 'Energie besparen'
+                                                    : isFrench
+                                                      ? "Économiser de l'énergie"
+                                                      : 'Save Energy'}
                                             </ButtonLink>
                                         </li>
                                         {/* Item 4: Participate */}
                                         <li className={styles.navigationItem}>
                                             <ButtonLink
-                                                href="https://eneco.be/nl/participeren"
+                                                href={
+                                                    isDutch
+                                                        ? 'https://eneco.be/nl/participeren'
+                                                        : isFrench
+                                                          ? 'https://eneco.be/fr/participer'
+                                                          : 'https://eneco.be/nl/participeren'
+                                                }
                                                 variation="navigation"
                                                 className={styles.navigationButton}
                                             >
-                                                Participate
+                                                {isDutch
+                                                    ? 'Participeren'
+                                                    : isFrench
+                                                      ? 'Participer'
+                                                      : 'Participate'}
                                             </ButtonLink>
                                         </li>
                                         {/* Item 5: Customer benefits */}
                                         <li className={styles.navigationItem}>
                                             <ButtonLink
-                                                href="https://eneco.be/nl/klantvoordelen"
+                                                href={
+                                                    isDutch
+                                                        ? 'https://eneco.be/nl/klantvoordelen'
+                                                        : isFrench
+                                                          ? 'https://eneco.be/fr/avantages-pour-le-client'
+                                                          : 'https://eneco.be/nl/klantvoordelen'
+                                                }
                                                 variation="navigation"
                                                 className={styles.navigationButton}
                                             >
-                                                Customer benefits
+                                                {isDutch
+                                                    ? 'Klantvoordelen'
+                                                    : isFrench
+                                                      ? 'Avantages pour le client'
+                                                      : 'Customer benefits'}
                                             </ButtonLink>
                                         </li>
                                         {/* Item 6: Help & Contact */}
                                         <li className={styles.navigationItem}>
                                             <ButtonLink
-                                                href="https://eneco.be/nl/contact"
+                                                href={
+                                                    isDutch
+                                                        ? 'https://eneco.be/nl/contact'
+                                                        : isFrench
+                                                          ? 'https://eneco.be/fr/contact'
+                                                          : 'https://eneco.be/nl/contact'
+                                                }
                                                 variation="navigation"
                                                 className={styles.navigationButton}
                                             >
-                                                Help & Contact
+                                                {isDutch
+                                                    ? 'Hulp & Contact'
+                                                    : isFrench
+                                                      ? 'Aide & Contact'
+                                                      : 'Help & Contact'}
                                             </ButtonLink>
                                         </li>
                                     </ul>
@@ -294,31 +349,61 @@ export function Header({
                                 {/* Item 8: Freelancers */}
                                 <li className={styles.navigationItem}>
                                     <ButtonLink
-                                        href="https://eneco.be/nl/kmo"
+                                        href={
+                                            isDutch
+                                                ? 'https://eneco.be/nl/kmo'
+                                                : isFrench
+                                                  ? 'https://eneco.be/fr/pme'
+                                                  : 'https://eneco.be/nl/kmo'
+                                        }
                                         variation="navigation"
                                         className={styles.navigationButton}
                                     >
-                                        Freelancers
+                                        {isDutch
+                                            ? 'Zelfstandigen'
+                                            : isFrench
+                                              ? 'Indépendants'
+                                              : 'Freelancers'}
                                     </ButtonLink>
                                 </li>
                                 {/* Item 9: Business */}
                                 <li className={styles.navigationItem}>
                                     <ButtonLink
-                                        href="https://eneco.be/nl/business"
+                                        href={
+                                            isDutch
+                                                ? 'https://eneco.be/nl/business'
+                                                : isFrench
+                                                  ? 'https://eneco.be/fr/entreprises'
+                                                  : 'https://eneco.be/nl/business'
+                                        }
                                         variation="navigation"
                                         className={styles.navigationButton}
                                     >
-                                        Business
+                                        {isDutch
+                                            ? 'Bedrijven'
+                                            : isFrench
+                                              ? 'Entreprises'
+                                              : 'Businesses'}
                                     </ButtonLink>
                                 </li>
                                 {/* Item 10: My Eneco */}
                                 <li className={classNames(styles.navigationItem, styles.myEnecoItem)}>
                                     <ButtonLink
-                                        href="https://my.eneco.be/nl/Account/Logon?returnUrl=%2Fnl"
+                                        href={
+                                            isDutch
+                                                ? 'https://my.eneco.be/nl/Account/Logon?returnUrl=%2Fnl'
+                                                : isFrench
+                                                  ? 'https://my.eneco.be/fr/Account/Logon?returnUrl=%2Ffr'
+                                                  : 'https://my.eneco.be/nl/Account/Logon?returnUrl=%2Fnl'
+                                        }
                                         variation="navigation"
                                         className={styles.navigationButton}
                                     >
-                                        My Eneco
+                                        {isDutch
+                                            ? 'Mijn Eneco'
+                                            : isFrench
+                                              ? 'Mon Eneco'
+                                              : 'My Eneco'}
                                     </ButtonLink>
                                 </li>
                                 {/* Item 11: Search */}
@@ -343,7 +428,9 @@ export function Header({
                             {children && typeof children === 'object' && 'props' in children
                                 ? (
                                     <li className={styles.navigationItem}>
-                                        {cloneElement(children as ReactElement, { asListItem: false })}
+                                        {cloneElement(children as ReactElement, {
+                                            asListItem: false,
+                                        } as Record<string, unknown>)}
                                     </li>
                                 )
                                 : children ? (

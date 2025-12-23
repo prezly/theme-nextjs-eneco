@@ -54,21 +54,21 @@ export async function Stories({
     return (
         <>
             {mainStory && (
-                <InfiniteStories
-                    key={categoryId}
-                    categories={categories}
-                    category={categoryId ? { id: categoryId } : undefined}
-                    excludedStoryUuids={excludedStoryUuids}
-                    fullWidthFeaturedStory={fullWidthFeaturedStory}
+        <InfiniteStories
+            key={categoryId}
+            categories={categories}
+            category={categoryId ? { id: categoryId } : undefined}
+            excludedStoryUuids={excludedStoryUuids}
+            fullWidthFeaturedStory={fullWidthFeaturedStory}
                     initialStories={[mainStory]}
-                    layout={layout}
-                    newsroomName={languageSettings.company_information.name || newsroom.name}
-                    newsrooms={[newsroom]}
-                    newsroomUuid={newsroom.uuid}
-                    pageSize={pageSize}
-                    showDate={showDate}
-                    showSubtitle={showSubtitle}
-                    storyCardVariant={storyCardVariant}
+            layout={layout}
+            newsroomName={languageSettings.company_information.name || newsroom.name}
+            newsrooms={[newsroom]}
+            newsroomUuid={newsroom.uuid}
+            pageSize={pageSize}
+            showDate={showDate}
+            showSubtitle={showSubtitle}
+            storyCardVariant={storyCardVariant}
                     total={1}
                     withPageTitle={false}
                 />

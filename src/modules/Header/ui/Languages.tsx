@@ -46,7 +46,12 @@ function withShortenedTitles(options: Languages.Option[]): LanguagesDropdown.Opt
             (locale, _, locales): LanguagesDropdown.Option => ({
                 code: locale.code,
                 href: locale.href,
-                title: Intl.getLanguageDisplayName(locale, locales),
+                title:
+                    locale.code === 'en'
+                        ? 'UK'
+                        : locale.code === 'fr'
+                          ? 'FR'
+                          : Intl.getLanguageDisplayName(locale, locales),
             }),
         );
 }
