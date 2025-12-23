@@ -3,6 +3,7 @@ import type { Locale } from '@prezly/theme-kit-nextjs';
 
 import { app } from '@/adapters/server';
 import type { ThemeSettings } from '@/theme-settings';
+import type { ListStory } from '@/types';
 
 import { CategoryStoriesSection } from '../InfiniteStories/CategoryStoriesSection';
 import { InfiniteStories } from '../InfiniteStories';
@@ -34,7 +35,6 @@ export async function Stories({
     const {
         categories,
         stories,
-        pagination,
         excludedStoryUuids,
         newsCategory,
         pressReleasesCategory,
@@ -73,14 +73,17 @@ export async function Stories({
                     withPageTitle={false}
                 />
             )}
-            {newsCategory && newsStories.length > 0 && newsCategory.i18n[localeCode] && (
-                <CategoryStoriesSection
-                    category={newsCategory}
-                    translatedCategory={{
-                        name: newsCategory.i18n[localeCode]!.name,
-                        slug: newsCategory.i18n[localeCode]!.slug,
-                        locale: localeCode,
-                    }}
+            {newsCategory &&
+                newsStories.length > 0 &&
+                newsCategory.i18n[localeCode] &&
+                newsCategory.i18n[localeCode]?.slug && (
+                    <CategoryStoriesSection
+                        category={newsCategory}
+                        translatedCategory={{
+                            name: newsCategory.i18n[localeCode]!.name,
+                            slug: newsCategory.i18n[localeCode]!.slug!,
+                            locale: localeCode,
+                        }}
                     excludedStoryUuids={excludedStoryUuids}
                     initialStories={newsStories}
                     layout={layout}
@@ -95,12 +98,13 @@ export async function Stories({
             )}
             {pressReleasesCategory &&
                 pressReleasesStories.length > 0 &&
-                pressReleasesCategory.i18n[localeCode] && (
+                pressReleasesCategory.i18n[localeCode] &&
+                pressReleasesCategory.i18n[localeCode]?.slug && (
                     <CategoryStoriesSection
                         category={pressReleasesCategory}
                         translatedCategory={{
                             name: pressReleasesCategory.i18n[localeCode]!.name,
-                            slug: pressReleasesCategory.i18n[localeCode]!.slug,
+                            slug: pressReleasesCategory.i18n[localeCode]!.slug!,
                             locale: localeCode,
                         }}
                         excludedStoryUuids={excludedStoryUuids}
@@ -133,18 +137,48 @@ async function getStories({
         ({ is_featured, i18n }) => is_featured && i18n[localeCode]?.public_stories_number > 0,
     );
 
-    // Find NEWS and PRESS RELEASES categories by name
+    // Find NEWS and PRESS RELEASES categories by name (locale-aware)
+    // Map of category names by locale - collect all known names across all locales
+    const newsNamesByLocale: Partial<Record<Locale.Code, string[]>> = {
+        en: ['NEWS'],
+        fr: ['NOUVELLES', 'ACTUALITÉS', 'ACTUALITES'],
+        nl: ['NIEUWS'],
+    };
+
+    const pressReleaseNamesByLocale: Partial<Record<Locale.Code, string[]>> = {
+        en: ['PRESS RELEASES', 'PRESS RELEASE'],
+        fr: ['COMMUNIQUÉS DE PRESSE', 'COMMUNIQUES DE PRESSE'],
+        nl: ['PERSBERICHTEN'],
+    };
+
+    // Collect all known names across all locales for each category type
+    const allNewsNames = Object.values(newsNamesByLocale).flat();
+    const allPressReleaseNames = Object.values(pressReleaseNamesByLocale).flat();
+
+    // Find categories by matching names across ANY locale, then check if they have a translation for current locale
     const newsCategory = categories.find((category) => {
-        const translation = category.i18n[localeCode];
-        return translation && translation.name.toUpperCase() === 'NEWS';
+        // First check if category matches any known news name across all locales
+        const matchesNewsName = Object.values(category.i18n).some((translation) => {
+            if (!translation) return false;
+            const nameUpper = translation.name.toUpperCase();
+            return allNewsNames.includes(nameUpper);
+        });
+
+        // If it matches, verify it has a translation for the current locale
+        return matchesNewsName && category.i18n[localeCode]?.public_stories_number > 0;
     });
 
     const pressReleasesCategory = categories.find((category) => {
-        const translation = category.i18n[localeCode];
+        // First check if category matches any known press release name across all locales
+        const matchesPressReleaseName = Object.values(category.i18n).some((translation) => {
+            if (!translation) return false;
+            const nameUpper = translation.name.toUpperCase();
+            return allPressReleaseNames.includes(nameUpper);
+        });
+
+        // If it matches, verify it has a translation for the current locale
         return (
-            translation &&
-            (translation.name.toUpperCase() === 'PRESS RELEASES' ||
-                translation.name.toUpperCase() === 'PRESS RELEASE')
+            matchesPressReleaseName && category.i18n[localeCode]?.public_stories_number > 0
         );
     });
 
@@ -171,7 +205,7 @@ async function getStories({
     }
 
     // Fetch stories for NEWS category (max 4, excluding main story)
-    let newsStories: typeof import('@/types').ListStory[] = [];
+    let newsStories: ListStory[] = [];
     let newsPagination = { matched_records_number: 0 };
     if (newsCategory && newsCategory.i18n[localeCode]?.public_stories_number > 0) {
         const query = excludedStoryUuids
@@ -191,7 +225,7 @@ async function getStories({
     }
 
     // Fetch stories for PRESS RELEASES category (max 4, excluding main story)
-    let pressReleasesStories: typeof import('@/types').ListStory[] = [];
+    let pressReleasesStories: ListStory[] = [];
     let pressReleasesPagination = { matched_records_number: 0 };
     if (
         pressReleasesCategory &&
