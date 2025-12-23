@@ -14,6 +14,16 @@ export async function GET(request: NextRequest) {
     const locale = params.get('locale') as Locale.Code | null;
     const categoryId = parseNumber(params.get('category'));
     const tag = params.get('tag');
+    const queryParam = params.get('query');
+
+    let query: { uuid?: { $nin: string[] } } | undefined;
+    if (queryParam) {
+        try {
+            query = JSON.parse(queryParam);
+        } catch {
+            // Invalid JSON, ignore
+        }
+    }
 
     const { stories, pagination } = await app().stories({
         offset,
@@ -21,6 +31,7 @@ export async function GET(request: NextRequest) {
         categories: categoryId ? [{ id: categoryId }] : undefined,
         locale: locale ? { code: locale } : undefined,
         tags: tag ? [tag] : undefined,
+        query,
     });
 
     return NextResponse.json({ data: stories, total: pagination.matched_records_number });
