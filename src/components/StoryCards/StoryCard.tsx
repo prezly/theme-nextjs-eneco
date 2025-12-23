@@ -7,6 +7,7 @@ import type { ExternalStoryUrl, ListStory } from "@/types";
 
 import { CategoriesList } from "../CategoriesList";
 import { StoryImage } from "../StoryImage";
+import ArrowCarouselIcon from "@/public/images/arrow-carousel.svg";
 
 import styles from "./StoryCard.module.scss";
 
@@ -102,6 +103,9 @@ export function StoryCard({
                     </Link>
                 </HeadingTag>
                 <Link href={href} className={styles.readMoreRelease} title={titleAsString}>
+                    <span className={styles.readMoreReleaseIcon}>
+                        <ArrowCarouselIcon />
+                    </span>
                     Read more from this release
                 </Link>
                 {showSubtitle && subtitle && (

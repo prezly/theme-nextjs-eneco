@@ -17,7 +17,7 @@
 .meta {
     @include text-small;
 
-    display: flex;
+    display: none !important; // Hide categories from main story card
     align-items: center;
     gap: $spacing-1;
     margin-bottom: $spacing-3;
@@ -64,7 +64,8 @@
     margin: 0;
     font-size: 1.625rem;
     line-height: 140%;
-    font-weight: $font-weight-semi-bold;
+    font-weight: 400 !important; // Hardcoded to override mixins
+    text-align: left !important; // Left align title
 
     @include tablet-up {
         @include ensure-max-text-height(3, 140%);
@@ -77,7 +78,7 @@
 
 .titleLink {
     text-decoration: none;
-    color: var(--prezly-text-color);
+    color: #000000 !important; // Hardcoded to override theme settings
 }
 
 .subtitle {
@@ -86,20 +87,43 @@
     margin: $spacing-2 0 0;
     font-size: 1rem;
     line-height: 160%;
-    font-weight: $font-weight-regular;
+    font-weight: 400 !important; // Hardcoded to override mixins
 }
 
 .subtitleLink {
     text-decoration: none;
-    color: var(--prezly-text-color-secondary);
+    color: #000000 !important; // Hardcoded to override theme settings
 }
 
 .readMoreRelease {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; // Left align read more
+    gap: $spacing-2;
     margin-top: $spacing-2;
     margin-bottom: $spacing-2;
     text-decoration: none;
-    color: var(--prezly-text-color);
+    color: rgb(235, 67, 86) !important; // Hardcoded color
+    font-family: 'Etelka Medium', sans-serif !important;
+    font-weight: 400 !important;
     font-size: $font-size-m;
+}
+
+.readMoreReleaseIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 3px 5px 0 rgba(26, 23, 27, 0.2);
+    flex-shrink: 0;
+
+    svg {
+        width: 12px;
+        height: 12px;
+    }
 }
 
 .hero {
@@ -124,8 +148,8 @@
         .content {
             flex: 0 0 35%;
             justify-content: flex-start;
-            align-items: center;
-            text-align: center;
+            align-items: flex-start; // Left align content
+            text-align: left; // Left align text
         }
     }
 
@@ -137,6 +161,8 @@
     .title {
         @include heading-1;
         font-size: 27px;
+        font-weight: 400 !important; // Hardcoded to override mixin
+        text-align: left !important; // Left align title even in hero variant
     }
 
     .subtitle {
@@ -145,6 +171,7 @@
     }
 
     .readMore {
+        display: none !important; // Hide readMore link
         margin-top: $spacing-3;
         text-decoration: none;
         color: var(--prezly-text-color);
@@ -206,6 +233,8 @@
 
     .title {
         @include heading-3;
+        font-weight: 400 !important; // Hardcoded to override mixin
+        color: #000000 !important; // Hardcoded to override theme settings
     }
     
     @include mobile-only {
@@ -226,6 +255,8 @@
 
     .title {
         @include heading-2;
+        font-weight: 400 !important; // Hardcoded to override mixin
+        color: #000000 !important; // Hardcoded to override theme settings
     }
 
     .subtitle {
@@ -247,6 +278,8 @@
         .title {
             font-size: $font-size-m;
             line-height: 160%;
+            font-weight: 400 !important; // Hardcoded to override mixin
+            color: #000000 !important; // Hardcoded to override theme settings
         }
     }
 }

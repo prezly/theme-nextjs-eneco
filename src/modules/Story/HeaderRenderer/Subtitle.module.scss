@@ -2,8 +2,9 @@
     @include heading-2;
 
     margin: 0 0 $spacing-4;
-    color: var(--prezly-text-color-secondary);
-    font-weight: $font-weight-regular;
+    color: #000000 !important; // Hardcoded to override theme settings
+    font-family: 'Etelka Light', sans-serif !important;
+    font-weight: 400 !important; // Hardcoded to override mixin
 }
 
 .alignLeft {
