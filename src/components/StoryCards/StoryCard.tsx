@@ -72,7 +72,13 @@ export function StoryCard({
                 <StoryImage
                     className={styles.image}
                     fallback={fallback}
-                    forceAspectRatio={forceAspectRatio ? 4 / 3 : undefined}
+                    forceAspectRatio={
+                        forceAspectRatio
+                            ? size === 'hero'
+                                ? 16 / 9 // Hero cards use 16:9 aspect ratio (matches CSS)
+                                : 4 / 3 // Other cards use 4:3
+                            : undefined
+                    }
                     isStatic={withStaticImage}
                     placeholder={placeholder}
                     placeholderClassName={styles.placeholder}

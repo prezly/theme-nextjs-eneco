@@ -24,7 +24,11 @@ export function StoryImage({
     title,
 }: StoryImage.Props) {
     const image = getStoryThumbnail(thumbnailImage);
-    const uploadcareImage = applyAspectRatio(getUploadcareImage(image), forceAspectRatio);
+    const uploadcareImage = applyAspectRatio(
+        getUploadcareImage(image),
+        forceAspectRatio,
+        size === 'hero',
+    );
 
     if (uploadcareImage) {
         return (
@@ -89,6 +93,7 @@ export namespace StoryImage {
 function applyAspectRatio(
     image: UploadcareImage | null,
     aspectRatio: number | undefined,
+    isHero = false,
 ): UploadcareImage | null {
     if (!image || !aspectRatio) {
         return image;
@@ -96,15 +101,45 @@ function applyAspectRatio(
 
     const actualAspectRatio = image.width / image.height;
 
+    // For hero images, ensure we request images at a minimum size for quality
+    // Hero images display at ~71.5% width, so on 1920px screen that's ~1373px
+    // We want at least 1920px wide for retina support
+    const minHeroWidth = 1920;
+    const minHeroHeight = Math.round(minHeroWidth / aspectRatio); // ~1080 for 16:9
+
     if (actualAspectRatio > aspectRatio) {
-        const [width, height] = constrain(Math.round(image.height * aspectRatio), image.height);
-        // The image is wider than it should
+        // The image is wider than it should be - crop width
+        let targetHeight = image.height;
+        let targetWidth = Math.round(image.height * aspectRatio);
+
+        // For hero images, scale up if needed to ensure minimum quality
+        if (isHero && targetWidth < minHeroWidth) {
+            targetWidth = minHeroWidth;
+            targetHeight = minHeroHeight;
+        }
+
+        const [width, height] = constrain(targetWidth, targetHeight);
         return image.scaleCrop(width, height, true);
     }
 
     if (actualAspectRatio < aspectRatio) {
-        // The image is taller than it should
-        const [width, height] = constrain(image.width, Math.round(image.width / aspectRatio));
+        // The image is taller than it should be - crop height
+        let targetWidth = image.width;
+        let targetHeight = Math.round(image.width / aspectRatio);
+
+        // For hero images, scale up if needed to ensure minimum quality
+        if (isHero && targetWidth < minHeroWidth) {
+            targetWidth = minHeroWidth;
+            targetHeight = minHeroHeight;
+        }
+
+        const [width, height] = constrain(targetWidth, targetHeight);
+        return image.scaleCrop(width, height, true);
+    }
+
+    // Images already match aspect ratio - but scale up for hero if needed
+    if (isHero && image.width < minHeroWidth) {
+        const [width, height] = constrain(minHeroWidth, minHeroHeight);
         return image.scaleCrop(width, height, true);
     }
 

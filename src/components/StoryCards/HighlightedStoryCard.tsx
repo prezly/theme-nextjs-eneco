@@ -109,6 +109,7 @@ export function HighlightedStoryCard({
             key={story.uuid}
             external={false}
             fallback={fallback}
+            forceAspectRatio
             layout="horizontal"
             placeholder={{}}
             publishedAt={story.published_at}

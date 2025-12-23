@@ -51,6 +51,11 @@ function getDesktopImageSize(imageSize: ImageSize) {
     switch (imageSize) {
         case 'full-width':
             return '1200px';
+        case 'hero':
+            // Hero images need to be large enough for 71.5% container width + retina support
+            // On 1920px screen: 71.5% = ~1373px, with 2x retina = ~2746px
+            // Requesting 1920px should be sufficient for most displays
+            return '1920px';
         case 'medium':
             return '370px';
         case 'small':
