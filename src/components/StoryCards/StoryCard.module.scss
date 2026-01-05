@@ -3,10 +3,10 @@
     width: 100%;
 
     &.horizontal:not(.hero) {
-        height: 50vh;
-        min-height: 50vh;
-        max-height: 50vh;
-        margin-bottom: 4rem; // 4rem bottom margin for stories list items
+        height: 42.5vh; // Reduced by 15% from 50vh
+        min-height: 42.5vh; // Reduced by 15% from 50vh
+        max-height: 42.5vh; // Reduced by 15% from 50vh
+        margin-bottom: 3.4rem; // Reduced by 15% from 4rem (4rem * 0.85 = 3.4rem)
     }
 
     &.hero.horizontal {
@@ -55,6 +55,8 @@
 
 // Stories list specific styles (non-hero horizontal cards) - with shadow effect
 .horizontal:not(.hero) {
+    gap: calc($spacing-4 * 0.85); // Reduce gap by 15%
+
     .imageWrapper {
         flex: 0 0 25%; // Image takes 25% of available space in stories list
         position: relative;
@@ -69,9 +71,9 @@
             display: block;
             height: 100%;
             width: 100%;
-            left: -48px;
-            top: -48px;
-            background-color: rgba(144, 238, 224, 0.6); // Light teal/mint green shadow
+            left: calc(-48px * 0.85); // Reduced by 15% from -48px
+            top: calc(-48px * 0.85); // Reduced by 15% from -48px
+            background: linear-gradient(#e1f4f1, #b1dddf);
             z-index: -1;
         }
 
@@ -82,8 +84,8 @@
             display: block;
             height: 100%;
             width: 100%;
-            margin-left: 48px;
-            margin-right: -48px;
+            margin-left: calc(48px * 0.85); // Reduced by 15% from 48px
+            margin-right: calc(-48px * 0.85); // Reduced by 15% from -48px
             margin-top: 0;
             margin-bottom: 0;
         }
@@ -91,6 +93,7 @@
 
     .content {
         flex: 1 1 auto; // Content takes remaining space (75%)
+        padding: calc($spacing-4 * 0.85); // Reduce padding by 15%
     }
 }
 
@@ -168,6 +171,11 @@
     font-weight: 400 !important; // Hardcoded to override mixins
     text-align: left !important; // Left align title
 
+    // Reduce font size for non-hero horizontal cards by 15%
+    .horizontal:not(.hero) & {
+        font-size: calc(1.625rem * 0.85); // Reduced by 15%
+    }
+
     @include tablet-up {
         @include ensure-max-text-height(3, 140%);
 
@@ -189,6 +197,12 @@
     font-size: 1rem;
     line-height: 160%;
     font-weight: 400 !important; // Hardcoded to override mixins
+
+    // Reduce font size for non-hero horizontal cards by 15%
+    .horizontal:not(.hero) & {
+        font-size: calc(1rem * 0.85); // Reduced by 15%
+        margin: calc($spacing-2 * 0.85) 0 0; // Reduce margin by 15%
+    }
 }
 
 .subtitleLink {
@@ -208,6 +222,14 @@
     font-family: 'Etelka Medium', sans-serif !important;
     font-weight: 400 !important;
     font-size: $font-size-m;
+
+    // Reduce sizes for non-hero horizontal cards by 15%
+    .horizontal:not(.hero) & {
+        gap: calc($spacing-2 * 0.85); // Reduce gap by 15%
+        margin-top: calc($spacing-2 * 0.85); // Reduce margin by 15%
+        margin-bottom: calc($spacing-2 * 0.85); // Reduce margin by 15%
+        font-size: calc($font-size-m * 0.85); // Reduce font size by 15%
+    }
 }
 
 .readMoreReleaseIcon {
@@ -224,6 +246,17 @@
     svg {
         width: 12px;
         height: 12px;
+    }
+
+    // Reduce sizes for non-hero horizontal cards by 15%
+    .horizontal:not(.hero) & {
+        width: calc(24px * 0.85); // Reduced by 15%
+        height: calc(24px * 0.85); // Reduced by 15%
+
+        svg {
+            width: calc(12px * 0.85); // Reduced by 15%
+            height: calc(12px * 0.85); // Reduced by 15%
+        }
     }
 }
 
