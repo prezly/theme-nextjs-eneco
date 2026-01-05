@@ -1,0 +1,100 @@
+.container {
+    padding: $spacing-9 0;
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.columns {
+    display: block;
+
+    @include desktop-up {
+        display: flex;
+        gap: $spacing-6;
+    }
+}
+
+.heading {
+    font-family: 'Etelka Medium', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0 0 $spacing-4 0;
+    color: #333333;
+}
+
+.aboutUs {
+    margin-bottom: $spacing-6;
+
+    @include desktop-up {
+        flex: 0 0 60%;
+        margin-bottom: 0;
+    }
+}
+
+.rightColumn {
+    @include desktop-up {
+        flex: 0 0 40%;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.subscribeFormWrapper {
+    margin-bottom: $spacing-6;
+
+    @include desktop-up {
+        margin-bottom: $spacing-6;
+    }
+}
+
+.contacts {
+    @include desktop-up {
+        flex: 1;
+    }
+}
+
+.about {
+    margin-bottom: 0;
+
+    p {
+        font-family: 'Etelka Light', sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #333333;
+        margin: 0 0 $spacing-3 0;
+    }
+
+    * {
+        color: #333333;
+        font-family: 'Etelka Light', sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Etelka Medium', sans-serif;
+        color: #333333;
+    }
+}
+
+.contact {
+    font-family: 'Etelka Light', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    display: flex;
+    align-items: flex-start;
+    white-space: pre;
+    color: #333333;
+    margin: 0 0 $spacing-2 0;
+
+    .icon {
+        margin-right: $spacing-1;
+        margin-top: 0.1875rem;
+        flex-shrink: 0;
+    }
+}
+
+.link,
+.about a {
+    color: #333333;
+    text-decoration: underline;
+}
+

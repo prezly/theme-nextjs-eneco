@@ -9,7 +9,7 @@ import { PreviewPageMask } from '@/components/PreviewPageMask';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { WindowScrollListener } from '@/components/WindowScrollListener';
 import { Analytics } from '@/modules/Analytics';
-import { Boilerplate } from '@/modules/Boilerplate';
+import { BoilerplateSubscribe } from '@/modules/BoilerplateSubscribe';
 import {
     BroadcastGalleryProvider,
     BroadcastNotificationsProvider,
@@ -26,7 +26,6 @@ import { Header } from '@/modules/Header';
 import { IntlProvider } from '@/modules/Intl';
 import { Notifications } from '@/modules/Notifications';
 import { RoutingProvider } from '@/modules/Routing';
-import { SubscribeForm } from '@/modules/SubscribeForm';
 
 import '@prezly/content-renderer-react-js/styles.css';
 import '@prezly/uploadcare-image/build/styles.css';
@@ -153,8 +152,7 @@ export default async function MainLayout(props: Props) {
                             pressReleasesCategorySlug={pressReleasesCategorySlug}
                         />
                         <main className={styles.content}>{children}</main>
-                        <SubscribeForm />
-                        <Boilerplate localeCode={localeCode} />
+                        <BoilerplateSubscribe localeCode={localeCode} />
                         <Footer localeCode={localeCode} />
                     </div>
                     <ScrollToTopButton />

@@ -1,0 +1,56 @@
+.wrapper {
+    width: 100%;
+}
+
+.title {
+    font-family: 'Etelka Medium', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-top: 0;
+    margin-bottom: $spacing-4;
+    color: #333333;
+}
+
+.inlineForm {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    @include tablet-up {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: $spacing-2;
+    }
+}
+
+.button {
+    width: 100%;
+    align-self: start;
+
+    @include tablet-up {
+        width: auto;
+    }
+}
+
+.input {
+    @include tablet-up {
+        margin-bottom: 0 !important;
+    }
+}
+
+.disclaimer {
+    font-family: 'Etelka Light', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-top: $spacing-3;
+    margin-bottom: 0;
+    color: #333333;
+}
+
+.disclaimerLink {
+    color: #333333;
+    text-decoration: underline;
+    font-weight: $font-weight-medium;
+}
+
