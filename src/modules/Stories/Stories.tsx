@@ -78,6 +78,7 @@ export async function Stories({
                 newsCategory.i18n[localeCode] &&
                 newsCategory.i18n[localeCode]?.slug && (
                     <CategoryStoriesSection
+                        anchorId="heading-news"
                         category={newsCategory}
                         translatedCategory={{
                             name: newsCategory.i18n[localeCode]!.name,
@@ -101,6 +102,7 @@ export async function Stories({
                 pressReleasesCategory.i18n[localeCode] &&
                 pressReleasesCategory.i18n[localeCode]?.slug && (
                     <CategoryStoriesSection
+                        anchorId="heading-press-releases"
                         category={pressReleasesCategory}
                         translatedCategory={{
                             name: pressReleasesCategory.i18n[localeCode]!.name,

@@ -1,9 +1,10 @@
 'use client';
 
 import classNames from 'classnames';
+import { usePathname } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
-import { useLocale } from '@/adapters/client';
+import { useLocale, type AppUrlGeneratorParams } from '@/adapters/client';
 import { Link } from '@/components/Link';
 import { useDevice } from '@/hooks';
 import { IconArrowRight } from '@/icons';
@@ -11,14 +12,25 @@ import { IconArrowRight } from '@/icons';
 import styles from './ContentHubFilters.module.scss';
 
 interface FilterItem {
-    href: string;
+    href: string | AppUrlGeneratorParams;
     title: string;
     id?: string;
 }
 
-export function ContentHubFilters() {
+interface Props {
+    newsCategorySlug?: string;
+    pressReleasesCategorySlug?: string;
+}
+
+export function ContentHubFilters({ newsCategorySlug, pressReleasesCategorySlug }: Props) {
     const locale = useLocale();
     const { isMobile } = useDevice();
+    const pathname = usePathname();
+    
+    // Check if we're on the root page (index page) - not a category page
+    // Root page paths: /, /nl, /en, /fr, /nl/, /en/, /fr/
+    // Category page paths: /nl/category/nieuws, /en/category/news, etc.
+    const isRootPage = !pathname.includes('/category/');
 
     const filterItems: FilterItem[] = useMemo(
         () => {
@@ -27,31 +39,44 @@ export function ContentHubFilters() {
             const isEnglish = locale === 'en';
             const isDutch = !isFrench && !isEnglish;
 
+            // Determine hrefs: use anchors on root page, category links elsewhere
+            const newsHref = isRootPage && newsCategorySlug
+                ? '#heading-news'
+                : newsCategorySlug
+                  ? { routeName: 'category' as const, params: { slug: newsCategorySlug, localeCode: locale } }
+                  : '#heading-news';
+            
+            const pressReleasesHref = isRootPage && pressReleasesCategorySlug
+                ? '#heading-press-releases'
+                : pressReleasesCategorySlug
+                  ? { routeName: 'category' as const, params: { slug: pressReleasesCategorySlug, localeCode: locale } }
+                  : '#heading-press-releases';
+
             if (isDutch) {
                 return [
-                    { href: '#heading-news', title: 'Nieuws' },
-                    { href: '#heading-press-releases', title: 'Persberichten' },
+                    { href: newsHref, title: 'Nieuws' },
+                    { href: pressReleasesHref, title: 'Persberichten' },
                     { href: '#heading-media-library', title: 'Beeldbank', id: 'beeldbankAnchorlink' },
                     { href: '#heading-contacts', title: 'Contacteer ons', id: 'title_contactslink' },
                 ];
             }
             if (isFrench) {
                 return [
-                    { href: '#heading-news', title: 'Actualités' },
-                    { href: '#heading-press-releases', title: 'Communiqués de presse' },
+                    { href: newsHref, title: 'Actualités' },
+                    { href: pressReleasesHref, title: 'Communiqués de presse' },
                     { href: '#heading-media-library', title: 'Media Library', id: 'beeldbankAnchorlink' },
                     { href: '#heading-contacts', title: 'Contactez-nous', id: 'title_contactslink' },
                 ];
             }
             // en (default)
             return [
-                { href: '#heading-news', title: 'News' },
-                { href: '#heading-press-releases', title: 'Press Releases' },
+                { href: newsHref, title: 'News' },
+                { href: pressReleasesHref, title: 'Press Releases' },
                 { href: '#heading-media-library', title: 'Media Library', id: 'beeldbankAnchorlink' },
                 { href: '#heading-contacts', title: 'Contact us', id: 'title_contactslink' },
             ];
         },
-        [locale],
+        [locale, isRootPage, newsCategorySlug, pressReleasesCategorySlug],
     );
 
     const [isOpen, setIsOpen] = useState(false);
@@ -74,8 +99,8 @@ export function ContentHubFilters() {
                 {/* Desktop version */}
                 <div className={styles.desktop}>
                     <ul className={styles.list}>
-                        {filterItems.map((item) => (
-                            <li key={item.href} className={styles.item}>
+                        {filterItems.map((item, index) => (
+                            <li key={`${item.title}-${index}`} className={styles.item}>
                                 <Link
                                     href={item.href}
                                     className={styles.link}
@@ -109,8 +134,8 @@ export function ContentHubFilters() {
                         </span>
                     </button>
                     <ul className={styles.list}>
-                        {filterItems.map((item) => (
-                            <li key={item.href} className={styles.item}>
+                        {filterItems.map((item, index) => (
+                            <li key={`${item.title}-${index}`} className={styles.item}>
                                 <Link
                                     href={item.href}
                                     className={styles.link}

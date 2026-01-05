@@ -60,16 +60,13 @@ export function StoriesList({
     const hasStories = stories.length > 0;
 
     const [highlightedStories, restStories] = useMemo(() => {
-        if (isCategoryList) {
-            return [[], stories];
-        }
-
         // When there are only two stories and no categories to filter,
         // they should be both displayed as highlighted
-        if (stories.length === 2 && !hasCategories) {
+        if (stories.length === 2 && !hasCategories && !isCategoryList) {
             return [stories, []];
         }
 
+        // For category pages and root page: show first story as hero, rest in grid
         return [stories.slice(0, 1), stories.slice(1)];
     }, [hasCategories, isCategoryList, stories]);
 
@@ -136,7 +133,7 @@ export function StoriesList({
             {restStories.length > 0 && layout === 'grid' && (
                 <div
                     className={classNames(styles.storiesContainer, {
-                        [styles.stacked]: !isCategoryList,
+                        [styles.stacked]: true, // Always use stacked layout like CategoryStoriesSection
                     })}
                 >
                     {restStories.map((story, index) => {

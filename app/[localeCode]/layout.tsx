@@ -79,6 +79,48 @@ export default async function MainLayout(props: Props) {
     const { isTrackingEnabled } = analytics();
     const newsroom = await app().newsroom();
 
+    // Get category slugs for News and Press Releases
+    const categories = await app().categories();
+    
+    // Find NEWS and PRESS RELEASES categories by name (locale-aware)
+    const newsNamesByLocale: Partial<Record<Locale.Code, string[]>> = {
+        en: ['NEWS'],
+        fr: ['NOUVELLES', 'ACTUALITÉS', 'ACTUALITES'],
+        nl: ['NIEUWS'],
+    };
+
+    const pressReleaseNamesByLocale: Partial<Record<Locale.Code, string[]>> = {
+        en: ['PRESS RELEASES', 'PRESS RELEASE'],
+        fr: ['COMMUNIQUÉS DE PRESSE', 'COMMUNIQUES DE PRESSE'],
+        nl: ['PERSBERICHTEN'],
+    };
+
+    const allNewsNames = Object.values(newsNamesByLocale).flat();
+    const allPressReleaseNames = Object.values(pressReleaseNamesByLocale).flat();
+
+    const newsCategory = categories.find((category) => {
+        const matchesNewsName = Object.values(category.i18n).some((translation) => {
+            if (!translation) return false;
+            const nameUpper = translation.name.toUpperCase();
+            return allNewsNames.includes(nameUpper);
+        });
+        return matchesNewsName && category.i18n[localeCode]?.public_stories_number > 0;
+    });
+
+    const pressReleasesCategory = categories.find((category) => {
+        const matchesPressReleaseName = Object.values(category.i18n).some((translation) => {
+            if (!translation) return false;
+            const nameUpper = translation.name.toUpperCase();
+            return allPressReleaseNames.includes(nameUpper);
+        });
+        return (
+            matchesPressReleaseName && category.i18n[localeCode]?.public_stories_number > 0
+        );
+    });
+
+    const newsCategorySlug = newsCategory?.i18n[localeCode]?.slug;
+    const pressReleasesCategorySlug = pressReleasesCategory?.i18n[localeCode]?.slug;
+
     return (
         <html lang={isoCode} dir={direction}>
             <head>
@@ -106,7 +148,10 @@ export default async function MainLayout(props: Props) {
                     <Notifications localeCode={localeCode} />
                     <div className={styles.layout}>
                         <Header localeCode={localeCode} />
-                        <ContentHubFilters />
+                        <ContentHubFilters 
+                            newsCategorySlug={newsCategorySlug}
+                            pressReleasesCategorySlug={pressReleasesCategorySlug}
+                        />
                         <main className={styles.content}>{children}</main>
                         <SubscribeForm />
                         <Boilerplate localeCode={localeCode} />

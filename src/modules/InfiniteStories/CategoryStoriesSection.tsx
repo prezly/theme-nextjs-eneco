@@ -20,6 +20,7 @@ import listStyles from './StoriesList.module.scss';
 import styles from './CategoryStoriesSection.module.scss';
 
 type Props = {
+    anchorId?: string;
     category: Category;
     translatedCategory: { name: string; slug: string; locale: Locale.Code };
     excludedStoryUuids?: string[];
@@ -52,6 +53,7 @@ function fetchStories(props: {
 }
 
 export function CategoryStoriesSection({
+    anchorId,
     category,
     translatedCategory,
     excludedStoryUuids,
@@ -95,6 +97,7 @@ export function CategoryStoriesSection({
                     params: { slug: translatedCategory.slug, localeCode: translatedCategory.locale },
                 }}
                 className={styles.categoryTitle}
+                id={anchorId}
             >
                 {translatedCategory.name}
             </Link>

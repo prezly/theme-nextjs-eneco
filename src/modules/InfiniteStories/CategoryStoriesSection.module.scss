@@ -10,7 +10,7 @@
 }
 
 .categoryTitle {
-    font-family: 'EtelkaMedium', sans-serif;
+    font-family: 'Etelka Medium', sans-serif;
     font-size: 28px;
     font-weight: 500;
     line-height: 37px;
@@ -29,9 +29,11 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     display: block;
     margin-bottom: $spacing-7;
+    scroll-margin-top: 180px; // Offset for anchor navigation: header (100px) + filters (58.4px) + spacing
 
     @include desktop-up {
         margin-bottom: $spacing-8;
+        scroll-margin-top: 180px; // Same offset on desktop
     }
 
     &:hover {
