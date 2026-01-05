@@ -157,7 +157,10 @@ export default async function MainLayout(props: Props) {
                         <main className={styles.content}>{children}</main>
                         <BoilerplateSubscribe localeCode={localeCode} />
                         <Contacts localeCode={localeCode} />
-                        <FooterLinks companyInformation={languageSettings.company_information} />
+                        <FooterLinks 
+                            companyInformation={languageSettings.company_information}
+                            localeCode={localeCode}
+                        />
                         <Footer localeCode={localeCode} />
                     </div>
                     <ScrollToTopButton />
