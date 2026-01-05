@@ -17,10 +17,12 @@ import {
     BroadcastStoryProvider,
     BroadcastTranslationsProvider,
 } from '@/modules/Broadcast';
+import { Contacts } from '@/modules/Contacts';
 import { CookieConsentProvider } from '@/modules/CookieConsent';
 import { CookieConsent } from '@/modules/CookieConsent/CookieConsent';
 import { ContentHubFilters } from '@/modules/ContentHubFilters';
 import { Footer } from '@/modules/Footer';
+import { FooterLinks } from '@/modules/FooterLinks';
 import { Branding, Preconnect } from '@/modules/Head';
 import { Header } from '@/modules/Header';
 import { IntlProvider } from '@/modules/Intl';
@@ -77,6 +79,7 @@ export default async function MainLayout(props: Props) {
     const { code: localeCode, isoCode, direction } = Locale.from(params.localeCode);
     const { isTrackingEnabled } = analytics();
     const newsroom = await app().newsroom();
+    const languageSettings = await app().languageOrDefault(localeCode);
 
     // Get category slugs for News and Press Releases
     const categories = await app().categories();
@@ -153,6 +156,8 @@ export default async function MainLayout(props: Props) {
                         />
                         <main className={styles.content}>{children}</main>
                         <BoilerplateSubscribe localeCode={localeCode} />
+                        <Contacts localeCode={localeCode} />
+                        <FooterLinks companyInformation={languageSettings.company_information} />
                         <Footer localeCode={localeCode} />
                     </div>
                     <ScrollToTopButton />

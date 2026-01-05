@@ -1,0 +1,65 @@
+.container {
+    padding: $spacing-9 0;
+    background-color: #ffffff;
+    border-top: 1px solid var(--prezly-border-color);
+}
+
+.columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-6;
+
+    @include tablet-up {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include desktop-up {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.columnTitle {
+    font-family: 'Etelka Medium', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0 0 $spacing-4 0;
+    color: #333333;
+}
+
+.linkList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+}
+
+.link {
+    font-family: 'Etelka Light', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: #333333;
+        text-decoration: underline;
+    }
+}
+
+.socialMedia {
+    margin-top: 0;
+
+    :global(.link) {
+        color: #333333 !important;
+    }
+}
+

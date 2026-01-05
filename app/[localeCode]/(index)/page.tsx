@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
 import { app, generatePageMetadata, routing } from '@/adapters/server';
-import { Contacts } from '@/modules/Contacts';
 import { FeaturedCategories } from '@/modules/FeaturedCategories';
 import { getStoryListPageSize, parseNumber, parsePreviewSearchParams } from '@/utils';
 
@@ -83,7 +82,6 @@ export default async function StoriesIndexPage(props: Props) {
                     storyCardVariant={themeSettings.story_card_variant}
                 />
             )}
-            <Contacts localeCode={params.localeCode} />
             {themeSettings.show_featured_categories && (
                 <FeaturedCategories
                     accentColor={themeSettings.accent_color}
