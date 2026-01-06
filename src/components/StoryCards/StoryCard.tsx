@@ -1,7 +1,10 @@
+'use client';
+
 import type { TranslatedCategory } from "@prezly/sdk";
 import classNames from "classnames";
 import type { ReactNode } from "react";
 
+import { useLocale } from "@/adapters/client";
 import { Link } from "@/components/Link";
 import type { ExternalStoryUrl, ListStory } from "@/types";
 
@@ -50,12 +53,24 @@ export function StoryCard({
     variant = "default",
     withStaticImage = false,
 }: Props) {
+    const locale = useLocale();
     const hasCategories = translatedCategories.length > 0;
     const HeadingTag = size === "small" ? "h3" : "h2";
 
     const href = external
         ? external.storyUrl
         : ({ routeName: "story", params: { slug } } satisfies Link.Props["href"]);
+
+    const getReadMoreText = () => {
+        if (locale.startsWith('fr')) {
+            return 'Lisez la suite du communiqué';
+        }
+        if (locale.startsWith('nl')) {
+            return 'Lees meer over dit bericht';
+        }
+        // Default to English
+        return 'Read more from this release';
+    };
 
     return (
         <div
@@ -112,7 +127,7 @@ export function StoryCard({
                     <span className={styles.readMoreReleaseIcon}>
                         <ArrowCarouselIcon />
                     </span>
-                    Read more from this release
+                    {getReadMoreText()}
                 </Link>
                 {showSubtitle && subtitle && (
                     <p className={styles.subtitle}>

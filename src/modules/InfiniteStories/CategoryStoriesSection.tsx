@@ -6,8 +6,8 @@ import { translations, useInfiniteLoading } from '@prezly/theme-kit-nextjs';
 import classNames from 'classnames';
 import { useCallback } from 'react';
 
-import { FormattedMessage, http, useLocale } from '@/adapters/client';
-import { Button } from '@/components/Button';
+import { FormattedMessage, http, useIntl, useLocale } from '@/adapters/client';
+import { LoadMoreButton } from '@/components/LoadMoreButton';
 import { Link } from '@/components/Link';
 import { StaggeredLayout } from '@/components/StaggeredLayout';
 import { StoryCard } from '@/components/StoryCards';
@@ -68,6 +68,7 @@ export function CategoryStoriesSection({
     total,
 }: Props) {
     const locale = useLocale();
+    const { formatMessage } = useIntl();
     const { load, loading, data: stories, done } = useInfiniteLoading(
         useCallback(
             (offset) =>
@@ -193,18 +194,12 @@ export function CategoryStoriesSection({
             )}
 
             {!done && (
-                <Button
-                    variation="secondary"
+                <LoadMoreButton
                     onClick={load}
                     loading={loading}
                     className={styles.loadMore}
-                >
-                    {loading ? (
-                        <FormattedMessage locale={locale} for={translations.misc.stateLoading} />
-                    ) : (
-                        <FormattedMessage locale={locale} for={translations.actions.loadMore} />
-                    )}
-                </Button>
+                    aria-label={formatMessage(translations.actions.loadMore)}
+                />
             )}
         </div>
     );

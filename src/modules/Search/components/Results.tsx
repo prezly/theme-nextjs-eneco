@@ -7,7 +7,7 @@ import type { InfiniteHitsProvided } from 'react-instantsearch-core';
 import { connectInfiniteHits } from 'react-instantsearch-dom';
 
 import { useIntl } from '@/adapters/client';
-import { Button } from '@/components/Button';
+import { LoadMoreButton } from '@/components/LoadMoreButton';
 import type { ThemeSettings } from '@/theme-settings';
 import type { ExternalStoryUrl } from '@/types';
 import { getNewsroomUuidFromHitTags } from '@/utils';
@@ -90,18 +90,16 @@ export const Results = connectInfiniteHits(
                 </div>
 
                 {hasMore && (
-                    <Button
-                        variation="secondary"
+                    <LoadMoreButton
                         onClick={refineNext}
                         loading={isSearching}
                         className={containerStyles.loadMore}
-                    >
-                        {formatMessage(
+                        aria-label={formatMessage(
                             isSearching
                                 ? translations.misc.stateLoading
                                 : translations.actions.loadMore,
                         )}
-                    </Button>
+                    />
                 )}
             </div>
         );
