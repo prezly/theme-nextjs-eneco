@@ -1,5 +1,6 @@
 .container {
     position: relative;
+    z-index: 102;
 }
 
 @mixin absolute-menu-position {
@@ -29,6 +30,7 @@
 .menu {
     list-style: none;
     overflow: hidden;
+    z-index: 101;
 
     &.withMobileDisplay {
         @include mobile-only {
