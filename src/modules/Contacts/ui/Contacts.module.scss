@@ -3,6 +3,7 @@
     margin-left: auto;
     margin-right: auto;
     padding-top: 2rem;
+    padding-bottom: 0.625rem; // 10px
     padding-left: $grid-spacing-mobile;
     padding-right: $grid-spacing-mobile;
 
@@ -47,6 +48,7 @@
     display: grid;
     gap: $spacing-6;
     grid-template-columns: 1fr;
+    padding-top: 1rem;
 
     @include not-desktop {
         grid-template-columns: 1fr !important;

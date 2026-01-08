@@ -1,13 +1,26 @@
 .container {
     padding: $spacing-9 0;
     background-color: #ffffff;
-    border-top: 1px solid var(--prezly-border-color);
+    font-family: 'Etelka Medium', sans-serif;
+
+    h3 {
+        font-family: 'Etelka Medium', sans-serif !important;
+        font-weight: 500 !important;
+        font-size: 1.625rem !important; // 26px
+    }
+
+    a {
+        font-family: 'Etelka Light', sans-serif !important;
+        font-weight: 400 !important;
+        font-size: 1.125rem !important; // 18px
+    }
 }
 
 .columns {
     display: grid;
     grid-template-columns: 1fr;
     gap: $spacing-6;
+    width: 100%;
 
     @include tablet-up {
         grid-template-columns: repeat(2, 1fr);
@@ -15,6 +28,7 @@
 
     @include desktop-up {
         grid-template-columns: repeat(4, 1fr);
+        justify-content: space-between;
     }
 }
 
@@ -24,9 +38,9 @@
 }
 
 .columnTitle {
-    font-family: 'Etelka Medium', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
+    font-family: 'Etelka Medium', sans-serif !important;
+    font-size: 1.625rem !important; // 26px
+    font-weight: 500 !important;
     line-height: 1.4;
     margin: 0 0 $spacing-4 0;
     color: #333333;
@@ -42,8 +56,9 @@
 }
 
 .link {
-    font-family: 'Etelka Light', sans-serif;
-    font-size: 1rem;
+    font-family: 'Etelka Light', sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 1.125rem !important; // 18px
     line-height: 1.6;
     color: #333333;
     text-decoration: none;
