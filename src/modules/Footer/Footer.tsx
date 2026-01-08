@@ -7,5 +7,5 @@ interface Props {
 }
 
 export async function Footer({ localeCode }: Props) {
-    return <ui.Footer />;
+    return <ui.Footer localeCode={localeCode} />;
 }
