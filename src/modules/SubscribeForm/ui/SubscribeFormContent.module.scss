@@ -46,11 +46,37 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 1.42857;
-    background: linear-gradient(90deg, #e5384c 0%, #ea754f 100%);
-    color: #ffffff;
+    background-color: #2a0c3a !important;
+    border-color: #2a0c3a !important;
     padding: 6.5px 16px;
     border-top-right-radius: 2px;
     border-bottom-right-radius: 2px;
+
+    span {
+        color: #95869d !important;
+        transition: color 0.3s ease;
+    }
+
+    &:not(:disabled) {
+        &:hover,
+        &:focus {
+            background-color: #2a0c3a !important;
+            border-color: #2a0c3a !important;
+
+            span {
+                color: #ffffff !important;
+            }
+        }
+
+        &:active {
+            background-color: #2a0c3a !important;
+            border-color: #2a0c3a !important;
+
+            span {
+                color: #ffffff !important;
+            }
+        }
+    }
 
     @include tablet-up {
         width: auto;
