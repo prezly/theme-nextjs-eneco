@@ -72,13 +72,7 @@ export function BoilerplateSubscribe({ localeCode, newsroom, companyInformation 
 
                         {/* Contacts */}
                         {hasContactInformation && (
-                            <section aria-labelledby="boilerplate-contacts" className={styles.contacts}>
-                                <h2 id="boilerplate-contacts" className={styles.heading}>
-                                    <FormattedMessage
-                                        locale={localeCode}
-                                        for={translations.boilerplate.contact}
-                                    />
-                                </h2>
+                            <section className={styles.contacts}>
                                 {hasAddress && (
                                     <p className={styles.contact}>
                                         <IconBuilding
